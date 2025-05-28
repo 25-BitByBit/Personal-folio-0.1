@@ -48,7 +48,23 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/backend:latest
 
-      # 7. EC2에 SSH로 접속 후 docker-compose 명령어 실행
+      # 7. EC2에 application.yml 생성 (GitHub Secrets 사용)
+      - name: Create application.yml on EC2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cat <<EOF > ~/app/backend/personal-folio/src/main/resources/application.yml
+spring:
+  datasource:
+    url: ${{ secrets.SPRING_DATASOURCE_URL }}
+    username: ${{ secrets.SPRING_DATASOURCE_USERNAME }}
+    password: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
+EOF
+
+      # 8. EC2에 SSH로 접속 후 docker-compose 명령어 실행
       - name: Deploy with Docker Compose
         uses: appleboy/ssh-action@master
         with:
