@@ -2,7 +2,10 @@ name: Frontend CI/CD (Next.js to S3)
 
 on:
   push:
-    branches: [ develop ]  # develop 브랜치에 push 될 때 자동 실행됨
+    branches:
+      - develop
+      - frontend-develop
+      - main
 
 jobs:
   build-and-deploy:
@@ -16,22 +19,25 @@ jobs:
       # npm 패키지 설치 (node_modules 생성)
       - name: Install dependencies
         run: npm install
-        working-directory: ./Frontend  # 프론트엔드 폴더 위치 (Next.js)
+        working-directory: ./Frontend/personal-folio  # 프론트엔드 폴더 위치 (Next.js)
 
       # Next.js 앱 빌드 + 정적 HTML로 export
       - name: Build and Export Next.js
         run: |
           npm run build     # .next 디렉토리 생성
           npm run export    # out 디렉토리 생성 (정적 HTML 생성됨)
-        working-directory: ./Frontend
+        working-directory: ./Frontend/personal-folio
 
       # 정적 HTML (./Frontend/out)을 AWS S3에 업로드
       - name: Upload to S3
         uses: jakejarvis/s3-sync-action@master
         with:
-          args: --delete  # 기존 파일 제거 후 새로 업로드
+          args: --delete
+          dest-dir: static        # S3 버킷의 /static/ 경로에 업로드
         env:
           AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}  # GitHub Secrets에 등록한 버킷 이름
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}  # IAM 사용자 키
+
+
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}  # IAM 비밀 키
-          SOURCE_DIR: ./Frontend/out  # S3로 업로드할 정적 파일 경로 (export 결과물)
+          SOURCE_DIR: ./Frontend/personal-folio/out  # S3로 업로드할 정적 파일 경로 (export 결과물)
