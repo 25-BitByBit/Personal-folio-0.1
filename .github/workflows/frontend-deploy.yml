@@ -19,7 +19,7 @@ jobs:
       # npm 패키지 설치 (node_modules 생성)
       - name: Install dependencies
         run: npm install
-        working-directory: ./Frontend  # 프론트엔드 폴더 위치 (Next.js)
+        working-directory: ./Frontend/personal-folio  # 프론트엔드 폴더 위치 (Next.js)
 
       # Next.js 앱 빌드 + 정적 HTML로 export
       - name: Build and Export Next.js
