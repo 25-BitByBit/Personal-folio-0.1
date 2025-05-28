@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. GitHub 저장소에서 소스 코드 체크아웃
+      # 1. GitHub 저장소 코드 체크아웃
       - name: Checkout source
         uses: actions/checkout@v3
 
@@ -28,19 +28,19 @@ jobs:
         run: chmod +x ./gradlew
         working-directory: ./backend/personal-folio
 
-      # 4. Spring Boot 빌드
+      # 4. Spring Boot 애플리케이션 빌드
       - name: Build Spring Boot app
         run: ./gradlew clean build
         working-directory: ./backend/personal-folio
 
-      # 5. DockerHub 로그인
+      # 5. Docker Hub 로그인
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      # 6. 백엔드 Docker 이미지 빌드 및 DockerHub에 푸시
+      # 6. Docker 이미지 빌드 및 푸시
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
@@ -48,7 +48,7 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/backend:latest
 
-      # 7. EC2에 application.yml 생성 (GitHub Secrets 사용)
+      # 7. EC2에 접속해서 application.yml 파일 생성
       - name: Create application.yml on EC2
         uses: appleboy/ssh-action@master
         with:
@@ -64,7 +64,7 @@ spring:
     password: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
 EOF
 
-      # 8. EC2에 SSH로 접속 후 docker-compose 명령어 실행
+      # 8. docker-compose 실행 (pull → down → up -d)
       - name: Deploy with Docker Compose
         uses: appleboy/ssh-action@master
         with:
