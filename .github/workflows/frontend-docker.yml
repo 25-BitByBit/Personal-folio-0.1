@@ -32,3 +32,17 @@ jobs:
           context: ./Frontend/personal-folio                 # Dockerfile 위치 기준 경로
           push: true                                         # 이미지 Docker Hub에 푸시
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/frontend:latest  # 이미지 태그 설정
+          
+      # 4. EC2에 접속해 프론트 Docker 실행
+      - name: Deploy on EC2 via SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/frontend:latest
+            docker stop frontend-container || true
+            docker rm frontend-container || true
+            docker run -d -p 3000:3000 --name frontend-container ${{ secrets.DOCKERHUB_USERNAME }}/frontend:latest
+
