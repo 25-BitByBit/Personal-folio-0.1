@@ -26,7 +26,7 @@ jobs:
         run: |
           npm run build     # .next 디렉토리 생성
           npm run export    # out 디렉토리 생성 (정적 HTML 생성됨)
-        working-directory: ./Frontend
+        working-directory: ./Frontend/personal-folio
 
       # 정적 HTML (./Frontend/out)을 AWS S3에 업로드
       - name: Upload to S3
@@ -40,4 +40,4 @@ jobs:
 
 
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}  # IAM 비밀 키
-          SOURCE_DIR: ./Frontend/out  # S3로 업로드할 정적 파일 경로 (export 결과물)
+          SOURCE_DIR: ./Frontend/personal-folio/out  # S3로 업로드할 정적 파일 경로 (export 결과물)
