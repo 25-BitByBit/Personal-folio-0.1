@@ -2,7 +2,10 @@ name: Backend CI/CD (develop)
 
 on:
   push:
-    branches: [ develop ]  # develop 브랜치에 push될 때만 실행됨
+    branches:
+      - develop
+      - backend-develop
+      - main  # 나중에 운영 배포용으로 추가
 
 jobs:
   build-and-push:
