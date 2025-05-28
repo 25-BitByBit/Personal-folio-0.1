@@ -2,7 +2,10 @@ name: Frontend CI/CD (Next.js to S3)
 
 on:
   push:
-    branches: [ develop ]  # develop 브랜치에 push 될 때 자동 실행됨
+    branches:
+      - develop
+      - frontend-develop
+      - main
 
 jobs:
   build-and-deploy:
