@@ -1,7 +1,5 @@
-# 워크플로우 이름 (GitHub Actions UI에 표시됨)
-name: Frontend CI/CD (Docker)
+name: Frontend CI/CD with SSH Deploy
 
-# 이 워크플로우는 아래 브랜치에 push 될 때 작동함
 on:
   push:
     branches:
@@ -11,24 +9,37 @@ on:
 
 jobs:
   build-and-push:
-    runs-on: ubuntu-latest  # GitHub에서 제공하는 최신 Ubuntu 환경에서 실행
+    runs-on: ubuntu-latest
 
     steps:
       # 1. GitHub 저장소에서 소스 코드 체크아웃
       - name: Checkout source
         uses: actions/checkout@v3
 
-      # 2. Docker Hub 로그인 (GitHub Secrets에 등록된 계정 정보 사용)
+      # 2. DockerHub 로그인
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}        # 시크릿에 저장된 DockerHub 사용자명
-          password: ${{ secrets.DOCKERHUB_PASSWORD }}        # 시크릿에 저장된 DockerHub 비밀번호
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      # 3. 프론트엔드 프로젝트를 Docker 이미지로 빌드 후 Docker Hub에 푸시
+      # 3. 프론트 Docker 이미지 빌드 및 DockerHub에 푸시
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v5
         with:
-          context: ./Frontend/personal-folio                 # Dockerfile 위치 기준 경로
-          push: true                                         # 이미지 Docker Hub에 푸시
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/frontend:latest  # 이미지 태그 설정
+          context: ./Frontend/personal-folio
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/frontend:latest
+
+      # 4. EC2에 접속해 docker-compose 명령어 실행
+      - name: Deploy with Docker Compose
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd ~/app
+            docker compose pull
+            docker compose down
+            docker compose up -d
