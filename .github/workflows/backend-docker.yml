@@ -48,7 +48,7 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/backend:latest
 
-      # 7. EC2에 application.yml 생성 (base64 decode)
+      # 7. EC2에 application.yml 생성 (디렉토리 먼저 생성!)
       - name: Create application.yml on EC2
         uses: appleboy/ssh-action@master
         with:
@@ -56,6 +56,7 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
+            mkdir -p ~/app/backend/personal-folio/src/main/resources
             echo "${{ secrets.APPLICATION_YML_B64 }}" | base64 -d > ~/app/backend/personal-folio/src/main/resources/application.yml
 
       # 8. EC2에서 docker-compose 실행
