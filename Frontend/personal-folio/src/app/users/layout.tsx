@@ -1,8 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import "./styles/layout.css";
 import Image from "next/image";
-import { useState } from "react";
 
 const images = [
   "/assets/users/login/login1.svg",

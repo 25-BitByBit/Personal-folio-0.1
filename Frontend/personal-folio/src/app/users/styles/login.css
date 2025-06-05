@@ -1,0 +1,44 @@
+.title-box {
+  /* border: 1px solid red; */
+  width: 95%;
+  font-size: 40;
+  font-weight: bolder;
+}
+
+.input-box {
+  /* border: 1px solid orange; */
+  width: 95%;
+  font-size: 16;
+}
+
+.text-box {
+  /* border: 1px solid yellow; */
+  width: 95%;
+  font-size: 12;
+  display: flex;
+  justify-content: end;
+}
+
+.btn-box {
+  /* border: 1px solid green; */
+  background-color: #515def;
+  color: #f3f3f3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 95%;
+  height: 40px;
+  border-radius: 5;
+  font-size: 16;
+  font-weight: bolder;
+  cursor: pointer;
+}
+
+.btn-box:hover {
+  background-color: #3645e4;
+}
+
+.clickable-text {
+  color: red;
+  cursor: pointer;
+}
