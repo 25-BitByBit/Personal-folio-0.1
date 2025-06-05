@@ -2,30 +2,31 @@ import Input from "@/components/input/Input";
 // css
 import "../styles/login.css";
 
-const FindPwPage = () => {
+const SetPasswordPage = () => {
   return (
     <div className="h-200 w-150 flex flex-col items-center justify-center font-geist gap-3">
       {/* goBack */}
-      <div className="clickable-black-text">Login</div>
       {/* Title */}
       <div className="title-box">
-        <h1>비밀번호 찾기</h1>
+        <h1>비밀번호 변경</h1>
       </div>
       {/* Input */}
       <div className="input-box">
-        <Input label="Email" placeholder="Id" />
+        <Input label="새 비밀번호" type="password" placeholder="새 비밀번호" />
       </div>
-
-      {/* Forgot Password */}
-      <div className="text-box ">
-        <p className="clickable-text">Id 찾기</p>
+      <div className="input-box">
+        <Input
+          label="비밀번호 확인"
+          type="password"
+          placeholder="새 비밀번호"
+        />
       </div>
       {/* Login Btn */}
-      <div className="btn-box">Submit</div>
+      <div className="btn-box">비밀번호 변경</div>
       {/* br */}
       {/* social login */}
     </div>
   );
 };
 
-export default FindPwPage;
+export default SetPasswordPage;
