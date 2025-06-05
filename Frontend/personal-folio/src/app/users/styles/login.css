@@ -44,6 +44,7 @@
 }
 
 .clickable-black-text {
+  /* border: 1px solid green; */
   cursor: pointer;
   width: 95%;
   font-size: 16;

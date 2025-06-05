@@ -1,13 +1,21 @@
+"use client";
+import { useRouter } from "next/navigation";
 import Input from "@/components/input/Input";
 // css
 import "../styles/login.css";
 
 const LoginPage = () => {
+  const router = useRouter();
+
+  const goFindPw = () => {
+    router.push("/users/findPw");
+  };
+
   return (
     <div className="h-200 w-150 flex flex-col items-center justify-center font-geist gap-3">
       {/* Title */}
       <div className="title-box">
-        <h1>Login</h1>
+        <div>Login</div>
       </div>
       {/* Input */}
       <div className="input-box">
@@ -18,7 +26,9 @@ const LoginPage = () => {
       </div>
       {/* Forgot Password */}
       <div className="text-box ">
-        <p className="clickable-text">비밀번호 찾기</p>
+        <p onClick={goFindPw} className="clickable-text">
+          비밀번호 찾기
+        </p>
       </div>
       {/* Login Btn */}
       <div className="btn-box">Login</div>
