@@ -42,3 +42,9 @@
   color: red;
   cursor: pointer;
 }
+
+.clickable-black-text {
+  cursor: pointer;
+  width: 95%;
+  font-size: 16;
+}
