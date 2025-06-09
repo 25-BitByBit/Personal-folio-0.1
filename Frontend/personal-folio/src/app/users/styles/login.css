@@ -7,6 +7,8 @@
 
 .input-box {
   /* border: 1px solid orange; */
+  padding-left: 5%;
+  padding-right: 5%;
   width: 95%;
   font-size: 16;
 }
@@ -41,11 +43,22 @@
 .clickable-text {
   color: red;
   cursor: pointer;
+  margin-left: 1%;
 }
 
 .clickable-black-text {
   /* border: 1px solid green; */
   cursor: pointer;
+  width: 95%;
+  font-size: 16;
+}
+
+.input-flex-box {
+  /* border: 1px solid gold; */
+  display: flex;
+  gap: 5%;
+  justify-content: space-around;
+  align-items: center;
   width: 95%;
   font-size: 16;
 }

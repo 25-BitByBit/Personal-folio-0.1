@@ -21,22 +21,26 @@ const Carousel = () => {
   return (
     <div className="img-box relative w-full">
       {/* Carousel wrapper */}
-      <div className=" h-56 overflow-hidden rounded-lg md:h-96">
+      <div
+        className=" h-50 overflow-hidden rounded-lg md:h-96"
+        // style={{ border: "3px solid green" }}
+      >
         {images.map((src, index) => (
           <div
             key={index}
             className={` absolute inset-0 transition-opacity duration-700 ease-in-out ${
               index === currentIndex ? "opacity-100" : "opacity-0"
             }`}
+            // style={{ border: "1px solid red" }}
           >
             <Image
               src={src}
+              width={1}
+              height={1}
               unoptimized
-              width={100}
-              height={150}
               priority
               alt={`Slide ${index + 1}`}
-              className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+              className="absolute w-full h-[90%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
             />
           </div>
         ))}
