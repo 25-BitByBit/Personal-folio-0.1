@@ -22,6 +22,7 @@ services:
     restart: unless-stopped
     environment:
       - SPRING_PROFILES_ACTIVE=prod
+    env_file: .env
 
   frontend:
     image: ${DOCKERHUB_USERNAME}/frontend:latest
@@ -29,6 +30,7 @@ services:
     ports:
       - "3000:3000"
     restart: unless-stopped
+    env_file: .env
 
   mysql:
     image: mysql:8.0
@@ -43,6 +45,7 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
     restart: unless-stopped
+    env_file: .env
 
 volumes:
   mysql_data:
