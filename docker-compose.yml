@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  nginx:
+    build: ./nginx
+    container_name: portfolio_nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - backend
+      - frontend
+    restart: unless-stopped
+
+  backend:
+    image: ${DOCKERHUB_USERNAME}/backend:latest
+    container_name: portfolio_backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+    restart: unless-stopped
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+
+  frontend:
+    image: ${DOCKERHUB_USERNAME}/frontend:latest
+    container_name: portfolio_frontend
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+
+  mysql:
+    image: mysql:8.0
+    container_name: portfolio_mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - mysql_data:/var/lib/mysql
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
