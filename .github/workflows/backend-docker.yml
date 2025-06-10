@@ -23,8 +23,8 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      # 3. application.yml을 로컬에 먼저 생성 (build 전에 필수)
-      - name: Create application.yml for test
+      # 3. application.yml 생성
+      - name: Create application.yml
         run: |
           mkdir -p ./backend/personal-folio/src/main/resources
           echo "${{ secrets.APPLICATION_YML_B64 }}" | base64 -d > ./backend/personal-folio/src/main/resources/application.yml
@@ -34,7 +34,7 @@ jobs:
         run: chmod +x ./gradlew
         working-directory: ./backend/personal-folio
 
-      # 5. Spring Boot 빌드 (이제 테스트 통과됨)
+      # 5. Spring Boot 빌드
       - name: Build Spring Boot app
         run: ./gradlew clean build
         working-directory: ./backend/personal-folio
@@ -54,18 +54,7 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/backend:latest
 
-      # 8. EC2에 application.yml 생성 (디렉토리 먼저 생성!)
-      - name: Create application.yml on EC2
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          script: |
-            mkdir -p ~/app/backend/personal-folio/src/main/resources
-            echo "${{ secrets.APPLICATION_YML_B64 }}" | base64 -d > ~/app/backend/personal-folio/src/main/resources/application.yml
-
-      # 9. EC2에서 docker-compose 실행
+      # 8. EC2에서 docker compose로 재배포만 실행
       - name: Deploy with Docker Compose
         uses: appleboy/ssh-action@master
         with:
@@ -74,8 +63,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd ~/app
-            docker compose pull
-            docker compose down
-            docker compose up -d
+            docker compose pull backend
+            docker compose pull backend
 
 
