@@ -63,5 +63,6 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }} 
           script: | 
             cd ~/app 
+            git pull
             docker compose pull backend         # 최신 백엔드 이미지 당겨오기
             docker compose up -d backend        # 백엔드 서비스만 재시작
