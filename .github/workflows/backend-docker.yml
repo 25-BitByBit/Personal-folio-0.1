@@ -23,7 +23,7 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      # 3. application.yml 생성
+      # 3. application.yml 생성 (Secrets 에서 Base64 디코딩)
       - name: Create application.yml
         run: |
           mkdir -p ./backend/personal-folio/src/main/resources
@@ -34,19 +34,19 @@ jobs:
         run: chmod +x ./gradlew
         working-directory: ./backend/personal-folio
 
-      # 5. Spring Boot 빌드
+      # 5. Spring Boot 애플리케이션 빌드
       - name: Build Spring Boot app
         run: ./gradlew clean build
         working-directory: ./backend/personal-folio
 
-      # 6. DockerHub 로그인
+      # 6. Docker Hub 로그인
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      # 7. 백엔드 Docker 이미지 빌드 및 DockerHub에 푸시
+      # 7. 백엔드 Docker 이미지 빌드 및 Docker Hub에 푸시
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
@@ -54,17 +54,14 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/backend:latest
 
-      # 8. EC2에서 docker compose로 재배포만 실행
+      # 8. EC2에 SSH 접속하여 docker-compose 로 배포
       - name: Deploy with Docker Compose
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          script: |
-            cd ~/app
-            docker compose pull backend
-            docker compose up -d backend
-
-
-
+          host: ${{ secrets.EC2_HOST }} 
+          username: ${{ secrets.EC2_USER }} 
+          key: ${{ secrets.EC2_SSH_KEY }} 
+          script: | 
+            cd ~/app 
+            docker compose pull backend         # 최신 백엔드 이미지 당겨오기
+            docker compose up -d backend        # 백엔드 서비스만 재시작
