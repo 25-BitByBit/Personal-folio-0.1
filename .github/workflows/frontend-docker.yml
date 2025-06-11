@@ -32,4 +32,5 @@ jobs:
           script: |
             cd ~/app/Personal-folio
             sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/frontend:latest
+            sudo docker compose rm -sf frontend
             sudo docker compose up -d frontend
