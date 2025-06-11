@@ -46,8 +46,9 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           capture_stdout: true
           script: |
+            set -x
             cd ~/app/Personal-folio
             sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/backend:latest
-            sudo docker stop portfolio_backend || true
-            sudo docker rm -f portfolio_backend || true
+            sudo docker stop backend || true
+            sudo docker rm -f backend || true
             sudo docker compose up -d --no-deps backend
