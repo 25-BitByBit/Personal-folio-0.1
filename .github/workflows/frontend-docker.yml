@@ -33,6 +33,6 @@ jobs:
             set -x
             cd ~/app/Personal-folio
             sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/frontend:latest
-            sudo docker compose stop frontend || true
-            sudo docker compose rm -sf frontend || true
+            sudo docker compose stop frontend
+            sudo docker compose rm -sf frontend
             sudo docker compose up -d --no-deps frontend
