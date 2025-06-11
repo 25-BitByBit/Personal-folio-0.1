@@ -44,3 +44,4 @@ services:
     env_file: .env
 volumes:
   mysql_data: null
+
