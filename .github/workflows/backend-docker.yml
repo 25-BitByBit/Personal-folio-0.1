@@ -49,6 +49,6 @@ jobs:
             set -x
             cd ~/app/Personal-folio
             sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/backend:latest
-            sudo docker stop backend || true
-            sudo docker rm -f backend || true
+            sudo docker stop backend
+            sudo docker rm -f backend
             sudo docker compose up -d --no-deps backend
