@@ -1,3 +1,5 @@
+// 추가할 거 : 로딩 중 상태 
+
 export interface ButtonProps {
     type?: 'button' | 'submit' | 'reset';
     onClick?: () => void;
@@ -11,3 +13,4 @@ export interface ButtonProps {
     title?: string;
     id?: string;
 }
+
