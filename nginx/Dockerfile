@@ -6,6 +6,8 @@ RUN rm /etc/nginx/conf.d/default.conf
 # 커스텀 nginx 설정 복사
 COPY nginx.conf /etc/nginx/nginx.conf
 
+COPY ./certs /etc/nginx/certs
+
 # 포트 80 노출
 EXPOSE 80
 
