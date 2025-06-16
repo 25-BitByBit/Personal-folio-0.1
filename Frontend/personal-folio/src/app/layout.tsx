@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ibmPlexSansKR, nanumHuman } from "./font";
+import Sidebar from "@/components/layout/Sidebar";
 import "./globals.css";
 
 
@@ -16,7 +17,12 @@ export default function RootLayout({
   return (
     <html lang="ko" className={`${ibmPlexSansKR.variable} ${nanumHuman.variable}`}>
       <body>
-        {children}
+        <div className="flex h-screen">
+          <Sidebar />
+          <main className="flex-1 overflow-y-auto p-8">
+            {children}
+          </main>
+        </div>
       </body>
     </html>
   );
