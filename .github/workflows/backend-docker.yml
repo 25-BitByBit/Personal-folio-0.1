@@ -52,3 +52,4 @@ jobs:
             sudo docker stop backend
             sudo docker rm -f backend
             sudo docker compose up -d --no-deps backend
+
