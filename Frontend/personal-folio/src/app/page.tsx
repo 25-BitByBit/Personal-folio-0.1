@@ -1,10 +1,11 @@
+import Card from "@/components/card/Card";
 
 export default function Home() {
   return (
     <main className="flex flex-col gap-8">
-      <section className="flex bg-primary p-8 rounded">
+      <section className="flex justify-center bg-primary p-8 rounded">
         <div>
-          여기에 메인 컨텐츠 들어감
+          <Card />
         </div>
       </section>
     </main>
