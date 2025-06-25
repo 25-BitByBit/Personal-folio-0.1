@@ -72,3 +72,5 @@ bootJar {
 jar {
     enabled = false
 }
+
+
