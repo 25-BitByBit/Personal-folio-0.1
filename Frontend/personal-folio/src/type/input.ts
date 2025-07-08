@@ -7,4 +7,5 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     className?: string;
     disabled?: boolean;
     label?: string;
+    id?: string;
 }
