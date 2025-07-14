@@ -20,7 +20,10 @@ public class File {
     private String fileName;
 
     @Column(nullable = false)
-    private String filePath;
+    private String s3Key;
+
+    @Column(nullable = false)
+    private String fileUrl;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
