@@ -16,6 +16,7 @@ public enum ExceptionStatus {
     // 파일
     FILE_UPLOAD_FAILED(50000, "파일 업로드에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR),
     INVALID_FILE_FORMAT(50000, "지원하지 않는 파일 형식입니다.", HttpStatus.BAD_REQUEST),
+    FILE_NOT_FOUND(50000, "파일이 존재하지 않습니다.",HttpStatus.NOT_FOUND),
 
     // 수상
     AWARD_NOT_FOUND(41100, "수상 경력을 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
